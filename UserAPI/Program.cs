@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using UserAPI.Data;
+using UserAPI.Repositories;
+using UserAPI.Repositories.Interfaces;
+
 namespace UserAPI
 {
     public class Program
@@ -13,7 +18,15 @@ namespace UserAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddEntityFrameworkSqlServer()
+                .AddDbContext<UserDBContext>(
+                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
+                );
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

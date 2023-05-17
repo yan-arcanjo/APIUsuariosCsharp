@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UserAPI.Data.Map;
 using UserAPI.Models;
 
 namespace UserAPI.Data
@@ -13,6 +14,8 @@ namespace UserAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UserMap()); 
+
             base.OnModelCreating(modelBuilder);
         }
     }
